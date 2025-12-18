@@ -2,9 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { IsEmail, IsNotEmpty, MaxLength, MinLength } from 'class-validator';
+import { Produto } from '../../produto/entities/produto.entity';
 
 @Entity({ name: 'tb_usuarios' })
 export class Usuario {
@@ -35,4 +37,7 @@ export class Usuario {
 
   @CreateDateColumn()
   data: Date;
+
+  @OneToMany(() => Produto, (produto) => produto.usuario)
+  produto: Produto[];
 }
