@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
+import { Usuario } from './usuario/entities/usuario.entity';
+import { UsuarioModule } from './usuario/usuario.module';
 
 @Module({
   imports: [
@@ -9,11 +10,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'root',
+      password: '95095100',
       database: 'db_ride',
-      entities: [],
+      entities: [Usuario],
       synchronize: true,
     }),
+    UsuarioModule,
   ],
   controllers: [],
   providers: [],
