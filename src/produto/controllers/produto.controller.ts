@@ -46,4 +46,18 @@ export class ProdutoController {
   delete(@Param('id', ParseIntPipe) id: number) {
     return this.produtoService.delete(id);
   }
+
+  // Funcao Adicional - Calculo tempo
+  @Get('/calculartempo/:id')
+  @HttpCode(HttpStatus.OK)
+  calcularTempo(@Param('id', ParseIntPipe) id: number) {
+    return this.produtoService.calcularTempo(id);
+  }
+
+  // Funcao Adicional - Mudar atributo motorista do mesmo genero
+  @Get('/mudarTipoViagem/:id')
+  @HttpCode(HttpStatus.OK)
+  mudarTipoViagem(@Param('id', ParseIntPipe) id: number) {
+    return this.produtoService.mudarTipoViagem(id);
+  }
 }

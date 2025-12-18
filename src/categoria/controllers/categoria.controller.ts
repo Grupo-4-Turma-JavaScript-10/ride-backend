@@ -1,44 +1,54 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
-import { CategoriaService } from "../services/categoria.service";
-import { Categoria } from "../entities/categoria.entity";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { CategoriaService } from '../services/categoria.service';
+import { Categoria } from '../entities/categoria.entity';
 
-@Controller("/categorias")
+@Controller('/categorias')
 export class CategoriaController {
-  constructor(private readonly categoriaService:CategoriaService) {}
+  constructor(private readonly categoriaService: CategoriaService) {}
 
   @Get()
-    @HttpCode(HttpStatus.OK)
-    findAll() {
-        return this.categoriaService.findAll();
-    }
+  @HttpCode(HttpStatus.OK)
+  findAll() {
+    return this.categoriaService.findAll();
+  }
 
-    @Get('/categoria/:categoriaId')
-    @HttpCode(HttpStatus.OK)
-    findByCategoria(@Param('categoriaId', ParseIntPipe) categoriaId: number) {
-        return this.categoriaService.findByCategoria(categoriaId);
-    }
+  @Get('/categoria/:categoriaId')
+  @HttpCode(HttpStatus.OK)
+  findByCategoria(@Param('categoriaId', ParseIntPipe) categoriaId: number) {
+    return this.categoriaService.findByCategoria(categoriaId);
+  }
 
-    @Get('/:id')
-    @HttpCode(HttpStatus.OK)
-    findById(@Param('id', ParseIntPipe) id: number): Promise<Categoria> {
-        return this.categoriaService.findById(id);
-    }
-    @Post()
-    @HttpCode(HttpStatus.CREATED)
-    create(@Body() categoria: Categoria): Promise<Categoria> {
-        return this.categoriaService.create(categoria);
-    }
+  @Get('/:id')
+  @HttpCode(HttpStatus.OK)
+  findById(@Param('id', ParseIntPipe) id: number): Promise<Categoria> {
+    return this.categoriaService.findById(id);
+  }
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
+  create(@Body() categoria: Categoria): Promise<Categoria> {
+    return this.categoriaService.create(categoria);
+  }
 
-    @Put()
-    @HttpCode(HttpStatus.OK)
-    update(@Body() categoria: Categoria): Promise<Categoria> {
-        return this.categoriaService.update(categoria);
-    }
+  @Put()
+  @HttpCode(HttpStatus.OK)
+  update(@Body() categoria: Categoria): Promise<Categoria> {
+    return this.categoriaService.update(categoria);
+  }
 
-    @Delete('/:id')
-    @HttpCode(HttpStatus.NO_CONTENT)
-    delete(@Param('id', ParseIntPipe) id: number) {
-        return this.categoriaService.delete(id);
-    }
-
+  @Delete('/:id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  delete(@Param('id', ParseIntPipe) id: number) {
+    return this.categoriaService.delete(id);
+  }
 }
