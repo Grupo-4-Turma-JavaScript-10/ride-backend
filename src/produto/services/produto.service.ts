@@ -46,7 +46,7 @@ export class ProdutoService {
     const tempo = viagem.distanciaKm / viagem.velocidadeMediaKmh;
     const minutos = tempo * 60;
 
-    return minutos;
+    return Math.round(minutos);
   }
 
   async mudarTipoViagem(id: number): Promise<boolean> {
