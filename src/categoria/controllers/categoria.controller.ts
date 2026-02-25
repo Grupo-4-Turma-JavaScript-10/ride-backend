@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import {
@@ -19,7 +20,6 @@ import { Categoria } from '../entities/categoria.entity';
 import { JwtAuthGuard } from '../../auth/guard/jwt-auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
-
 
 @ApiTags('Categoria')
 @UseGuards(JwtAuthGuard)
@@ -54,7 +54,9 @@ export class CategoriaController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() categoria: Categoria): Promise<Categoria> {
+  create(@Body() categoria: Categoria, @Request() req): Promise<Categoria> {
+    categoria.usuario = { id: req.user.sub } as any;
+
     return this.categoriaService.create(categoria);
   }
 
