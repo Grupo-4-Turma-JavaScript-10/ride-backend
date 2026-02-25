@@ -9,7 +9,7 @@ export class UsuarioService {
   constructor(
     @InjectRepository(Usuario)
     private usuarioRepository: Repository<Usuario>,
-    private bcrypt: Bcrypt
+    private bcrypt: Bcrypt,
   ) {}
 
   async findByUser(usuario: string): Promise<Usuario | null> {
@@ -21,7 +21,9 @@ export class UsuarioService {
   }
 
   async findAll(): Promise<Usuario[]> {
-    return await this.usuarioRepository.find();
+    return await this.usuarioRepository.find({
+      relations: ['categoria'],
+    });
   }
 
   async findById(id: number): Promise<Usuario> {
@@ -39,10 +41,10 @@ export class UsuarioService {
   async create(usuario: Usuario): Promise<Usuario> {
     const buscaUsuario = await this.findByUser(usuario.usuario);
 
-    if (buscaUsuario) 
+    if (buscaUsuario)
       throw new HttpException('O Usuario já existe!', HttpStatus.BAD_REQUEST);
-    
-    usuario.senha = await this.bcrypt.criptografarSenha(usuario.senha)
+
+    usuario.senha = await this.bcrypt.criptografarSenha(usuario.senha);
     return await this.usuarioRepository.save(usuario);
   }
 
@@ -51,10 +53,10 @@ export class UsuarioService {
 
     const buscaUsuario = await this.findByUser(usuario.usuario);
 
-    if (buscaUsuario && buscaUsuario.id !== usuario.id) 
+    if (buscaUsuario && buscaUsuario.id !== usuario.id)
       throw new HttpException('Usuário já cadastrado!', HttpStatus.BAD_REQUEST);
-    
-    usuario.senha = await this.bcrypt.criptografarSenha(usuario.senha)
+
+    usuario.senha = await this.bcrypt.criptografarSenha(usuario.senha);
     return await this.usuarioRepository.save(usuario);
   }
 

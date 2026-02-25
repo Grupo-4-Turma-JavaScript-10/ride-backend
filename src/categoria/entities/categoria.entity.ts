@@ -1,4 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+import { Usuario } from './../../usuario/entities/usuario.entity';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { IsNotEmpty } from 'class-validator';
 import { Produto } from '../../produto/entities/produto.entity';
 import { ApiProperty } from '@nestjs/swagger';
@@ -39,7 +48,14 @@ export class Categoria {
   @ApiProperty()
   placa: string;
 
-  @ApiProperty({type: () => [Produto]})
+  @ApiProperty({ type: () => [Produto] })
   @OneToMany(() => Produto, (produto) => produto.categoria)
   produto: Produto[];
+
+  @ApiProperty({ type: () => Usuario })
+  @ManyToOne(() => Usuario, (usuario) => usuario.categoria, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'usuarioId' })
+  usuario: Usuario;
 }

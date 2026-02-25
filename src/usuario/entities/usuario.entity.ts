@@ -8,6 +8,7 @@ import {
 import { IsEmail, IsNotEmpty, MaxLength, MinLength } from 'class-validator';
 import { Produto } from '../../produto/entities/produto.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { Categoria } from '../../categoria/entities/categoria.entity';
 
 @Entity({ name: 'tb_usuarios' })
 export class Usuario {
@@ -54,4 +55,8 @@ export class Usuario {
   @ApiProperty()
   @OneToMany(() => Produto, (produto) => produto.usuario)
   produto: Produto[];
+
+  @ApiProperty()
+  @OneToMany(() => Categoria, (categoria) => categoria.usuario)
+  categoria: Categoria[];
 }

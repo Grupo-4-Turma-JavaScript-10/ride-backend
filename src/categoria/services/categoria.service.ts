@@ -1,68 +1,52 @@
-import { promises } from "dns";
-import { Categoria } from "../entities/categoria.entity";
-import { DeleteResult, Repository } from "typeorm";
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
+import { promises } from 'dns';
+import { Categoria } from '../entities/categoria.entity';
+import { DeleteResult, Repository } from 'typeorm';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class CategoriaService {
-constructor(
-  @InjectRepository(Categoria)
-  private readonly categoriaRepository: Repository<Categoria>
-){}
+  constructor(
+    @InjectRepository(Categoria)
+    private readonly categoriaRepository: Repository<Categoria>,
+  ) {}
 
-async findById(id: number): Promise<Categoria> {
-        const categoria = await this.categoriaRepository.findOne({
-            where: { 
-            id 
-        }
-        });
+  async findById(id: number): Promise<Categoria> {
+    const categoria = await this.categoriaRepository.findOne({
+      where: {
+        id,
+      },
+    });
 
-        if (!categoria)
-            throw new HttpException('Veiculo não encontrado!', HttpStatus.NOT_FOUND);
+    if (!categoria)
+      throw new HttpException('Veiculo não encontrado!', HttpStatus.NOT_FOUND);
 
-        return categoria;
-    }
+    return categoria;
+  }
 
-    async findAll(): Promise<Categoria[]> {
-        return await this.categoriaRepository.find();
-    }
+  async findAll(): Promise<Categoria[]> {
+    return await this.categoriaRepository.find({});
+  }
 
-    async findByCategoria(categoriaId: number): Promise<Categoria[]> {
-        return await this.categoriaRepository.find({
-        });
-    }
+  async findByCategoria(categoriaId: number): Promise<Categoria[]> {
+    return await this.categoriaRepository.find({});
+  }
 
-    async create(categoria: Categoria): Promise<Categoria> {
-        const newCategoria = this.categoriaRepository.create(categoria);
-        return await this.categoriaRepository.save(newCategoria); }
+  async create(categoria: Categoria): Promise<Categoria> {
+    const newCategoria = this.categoriaRepository.create(categoria);
+    return await this.categoriaRepository.save(newCategoria);
+  }
 
-    async update(categoria: Categoria): Promise<Categoria> {
+  async update(categoria: Categoria): Promise<Categoria> {
     await this.findById(categoria.id);
     return await this.categoriaRepository.save(categoria);
-    }
+  }
 
-    async delete(id: number): Promise<DeleteResult> {
-        return await this.categoriaRepository.delete(id);
-    }
+  async delete(id: number): Promise<DeleteResult> {
+    return await this.categoriaRepository.delete(id);
+  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*  
+  /*  
   // Método para criar (cadastrar) um veículo
   async executeCreate({ fabricante, modelo, ano, cor, placa } promises: Categoria) {
     
