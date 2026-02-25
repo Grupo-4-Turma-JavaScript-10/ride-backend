@@ -32,6 +32,17 @@ export class CategoriaService {
     return await this.categoriaRepository.find({});
   }
 
+  async findByUsuario(usuarioId: number) {
+    return this.categoriaRepository.find({
+      where: {
+        usuario: {
+          id: usuarioId,
+        },
+      },
+      relations: ['usuario'],
+    });
+  }
+
   async create(categoria: Categoria): Promise<Categoria> {
     const newCategoria = this.categoriaRepository.create(categoria);
     return await this.categoriaRepository.save(newCategoria);
